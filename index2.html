@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designer Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        .designer-header {
+            text-align: center;
+        }
+
+        .designer-header img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 50%;
+            border: 5px solid #333;
+        }
+
+        .designer-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .designer-info h1 {
+            font-size: 32px;
+            color: #333;
+        }
+
+        .designer-info p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .back-to-gallery {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 10px 15px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-to-gallery:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="designer-header">
+        <img id="designer-image" src="" alt="Image du designer">
+    </div>
+
+    <div class="designer-info">
+        <h1 id="designer-name"></h1>
+        <p id="designer-bio"></p>
+        <p>Email : <a id="designer-email" href=""></a></p>
+        <p>Portfolio : <a id="designer-portfolio" href=""></a></p>
+    </div>
+
+    <div class="designer-info">
+        <a class="back-to-gallery" href="index.html">Retour à la galerie</a>
+    </div>
+
+    <script>
+        // Récupérer l'ID du designer depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const designerId = urlParams.get('id');
+
+        // Charger les données des designers à partir du fichier JSON
+        fetch('designers.json')
+            .then(response => response.json())
+            .then(data => {
+                const designer = data.find(d => d.id == designerId);
+                if (designer) {
+                    document.getElementById('designer-name').textContent = designer.name;
+                    document.getElementById('designer-image').src = designer.image;
+                    document.getElementById('designer-bio').textContent = designer.bio;
+                    document.getElementById('designer-email').textContent = designer.email;
+                    document.getElementById('designer-email').href = 'mailto:' + designer.email;
+                    document.getElementById('designer-portfolio').textContent = designer.portfolio;
+                    document.getElementById('designer-portfolio').href = designer.portfolio;
+                }
+            });
+    </script>
+</body>
+</html>
